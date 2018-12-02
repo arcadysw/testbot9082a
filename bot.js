@@ -17,7 +17,9 @@ var myLink = "http://"+php_root+'/'+php_file;
 
 client.on("ready", () => {
 	setInterval(function() {
-		var request = http.get('http://testbot9082a.herokuapp.com', function(res) {});
+		var request = http.get('http://testbot9082a.herokuapp.com', function(res) {
+			console.log("statusCode: ", res.statusCode);
+		});
 	}, 60000); // every 1 minutes
 	
 	setInterval(function() {
