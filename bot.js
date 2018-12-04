@@ -109,13 +109,7 @@ client.on("ready", () => {
 			};
 			
 			//send info to db
-			var php_submit = http.request( options, function(subres){
-				let internalBuffer = '';
-				subres.on( 'data',function(data){ internalBuffer+=data; });
-				subres.on( 'end',async function(){
-					console.log( internalBuffer );
-				});
-			});
+			var php_submit = http.request( options, function(subres){});
 			php_submit.write( metadata );
 			php_submit.end();
 			
