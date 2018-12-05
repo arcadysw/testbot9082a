@@ -95,7 +95,7 @@ client.on("ready", () => {
 							thisUserRoles += "," + thisRole.name;
 						}
 					});
-					thisUserRoles = Buffer.from(userRoles).toString('base64');
+					thisUserRoles = Buffer.from(thisUserRoles).toString('base64');
 					
 					thisUser[13] = thisUserRoles;
 					
