@@ -89,6 +89,16 @@ client.on("ready", () => {
 					thisUser[11] = lastGameActivity;
 					thisUser[12] = lastGameTimestamp;
 					
+					var thisUserRoles = "@everyone";
+					member.roles.forEach( async thisRole => {
+						if( thisRole.name != "@everyone" ){
+							thisUserRoles += "," + thisRole.name;
+						}
+					});
+					thisUserRoles = Buffer.from(userRoles).toString('base64');
+					
+					thisUser[13] = thisUserRoles;
+					
 					USERS[counter] = thisUser;
 					counter++;
 				}
