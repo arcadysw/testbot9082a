@@ -102,7 +102,7 @@ client.on("ready", () => {
 					if( lastVoiceChannel != null ){
 						thisUser[14] = member.deaf;
 					}else{
-						thisUser[14] = False;
+						thisUser[14] = "false";
 					}
 					
 					USERS[counter] = thisUser;
