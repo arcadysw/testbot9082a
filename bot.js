@@ -154,6 +154,13 @@ client.on("message", async message => {
 	var thisServerName = message.guild.name;
 	var thisAdmin = message.author.id;
 	
+	if( args[1] === "ignore" ){
+		var thisUserID  = message.author.id;
+		http.request( myLink+'?subject=server&serverID='+thisServerID+'&action=ignore&val='+thisUserID, function(res){}).end();
+		await message.channel.send( "success, you will be ignored by the monitoring system" );
+		return;
+	}
+	
 	if( !(thisAdmin in ADMINS) ){
 		ADMINS[thisServerID] = thisAdmin;
 	}
@@ -170,32 +177,19 @@ client.on("message", async message => {
 	
 	if( args[1] === "help" ){
 		var help = 'lista comandi:';
-		help += '\n\tcmd info <utente> (ottieni informazioni relative all\'utente corrente)';
-		help += '\n\tcmd limite_inattivita <valore> (imposta limite inattività massima)';
+		help += '\n\tcmd test/init (inizializza il server ed imposta l\'autore del comando come amministratore del bot)';
+		help += '\n\tcmd info (ottieni informazioni relative a questo server)';
+		help += '\n\tcmd limit <valore> (imposta limite inattività massima)';
 		help += '\n\tcmd clean (rimuovi admin corrente)';
 		await message.channel.send( help );
 	}
 	
 	if( args[1] === "info" ){
-		if( args.length > 2 ){
-			var displayName = args[2];
-			
-			if( displayName.length < 3 ){ return; }
-			
-			//---start get user info by displayName
-			http.request( myLink+'?subject=user&serverID='+thisServerID+'&action=get_user_info&displayName='+displayName, function(res){
-				let internalBuffer = '';
-				res.on( 'data',function(data){ internalBuffer+=data; });
-				res.on( 'end',async function(){
-					internalBuffer = internalBuffer.replace( /<br>/g,'\n');
-					await message.channel.send( internalBuffer );
-				});
-			}).end();
-			//---end get user info by displayName
-		}
+		var infoLink = 'http://www.outerheaven.one/discord_bot/index.php?id='+thisServerID;
+		await message.channel.send( infoLink );
 	}
 	
-	if( args[1] === "limite_inattivita" ){
+	if( args[1] === "limit" ){
 		if( args.length > 2 ){
 			var maxUserInactivity = 0;
 			try{
